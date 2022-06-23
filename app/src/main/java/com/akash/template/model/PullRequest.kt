@@ -2,11 +2,11 @@ package com.akash.template.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PullRequest(
-
-	@field:SerializedName("PullRequest")
-	val pullRequest: List<PullRequestItem?>? = null
-)
+//data class PullRequest(
+//
+//	@field:SerializedName("PullRequest")
+//	val pullRequest: List<PullRequestItem?>? = null
+//)
 
 data class Issue(
 
@@ -620,7 +620,7 @@ data class LabelsItem(
 	val description: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	@field:SerializedName("url")
 	val url: String? = null,
