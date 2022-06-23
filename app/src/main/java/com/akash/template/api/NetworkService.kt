@@ -7,8 +7,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NetworkService {
+@Singleton
+class NetworkService @Inject constructor(){
 
     val httpLogging =  HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 

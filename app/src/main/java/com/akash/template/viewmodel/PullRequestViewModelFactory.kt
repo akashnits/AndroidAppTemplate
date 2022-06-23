@@ -1,27 +1,20 @@
 package com.akash.template.viewmodel
 
-import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.savedstate.SavedStateRegistryOwner
-import com.akash.template.repository.PullRequestRepository
 
-/**
- * Factory for creating a [PlantListViewModel] with a constructor that takes a [PlantRepository].
- */
-class PullRequestViewModelFactory(
-    private val repository: PullRequestRepository,
-    owner: SavedStateRegistryOwner,
-    defaultArgs: Bundle? = null
-) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.akash.template.repository.PullRequestRepository
+import javax.inject.Inject
+import javax.inject.Singleton
+
+
+@Singleton
+class PullRequestViewModelFactory @Inject constructor(
+    val repository: PullRequestRepository
+) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(
-        key: String,
-        modelClass: Class<T>,
-        handle: SavedStateHandle
-    ): T {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return PullRequestVM(repository) as T
     }
 }

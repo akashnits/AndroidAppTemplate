@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PullRequestVM(private val pullRequestRepository: PullRequestRepository) : ViewModel() {
+class PullRequestVM @Inject constructor(val pullRequestRepository: PullRequestRepository) : ViewModel() {
 
     private val _snackbar = MutableLiveData<String?>()
 

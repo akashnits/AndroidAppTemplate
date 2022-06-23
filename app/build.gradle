@@ -43,6 +43,7 @@ def lifecycle_version = '2.2.0'
 def livedata_version = '2.5.0-rc02'
 def retrofit_gson_version = '2.9.0'
 def retrofit_version = '2.9.0'
+def dagger_version = '2.42'
 
 
 dependencies {
@@ -71,6 +72,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_gson_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
+
+    //dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     // threading
     implementation "androidx.annotation:annotation:$annotations_version"

@@ -2,20 +2,18 @@ package com.akash.template.repository
 
 import com.akash.template.api.NetworkService
 import com.akash.template.model.PullRequestItem
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.take
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Repository module for handling data operations.
  *
  * The @ExperimentalCoroutinesApi and @FlowPreview indicate that experimental APIs are being used.
  */
-class PullRequestRepository(
+@Singleton
+class PullRequestRepository @Inject constructor(
     private val networkService: NetworkService,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 
     suspend fun getPullRequests(
@@ -65,14 +63,4 @@ class PullRequestRepository(
 //            this@applyMainSafeSort.applySort(customSortOrder)
 //        }
 
-
-    companion object {
-        // For Singleton instantiation
-        @Volatile private var instance: PullRequestRepository? = null
-
-        fun getInstance(plantService: NetworkService) =
-            instance ?: synchronized(this) {
-                instance ?: PullRequestRepository(plantService).also { instance = it }
-            }
-    }
 }
