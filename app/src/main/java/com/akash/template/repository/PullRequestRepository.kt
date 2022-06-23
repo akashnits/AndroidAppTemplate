@@ -23,7 +23,7 @@ class PullRequestRepository(
         repo: String? = "react-native",
         state: String? = "closed"
     ): Flow<List<PullRequestItem>?> {
-        return networkService.getPullRequests(org!!, repo!!, state!!).take(20)
+        return networkService.getPullRequests(org!!, repo!!, state!!)
 
 //            .map { pullRequest ->
 //

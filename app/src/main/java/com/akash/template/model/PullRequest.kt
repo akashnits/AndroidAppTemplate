@@ -2,12 +2,6 @@ package com.akash.template.model
 
 import com.google.gson.annotations.SerializedName
 
-//data class PullRequest(
-//
-//	@field:SerializedName("PullRequest")
-//	val pullRequest: List<PullRequestItem?>? = null
-//)
-
 data class Issue(
 
 	@field:SerializedName("href")

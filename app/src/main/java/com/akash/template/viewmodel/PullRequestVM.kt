@@ -1,8 +1,12 @@
 package com.akash.template.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.akash.template.model.PullRequestItem
 import com.akash.template.repository.PullRequestRepository
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 class PullRequestVM(private val pullRequestRepository: PullRequestRepository) : ViewModel() {
@@ -33,7 +37,9 @@ class PullRequestVM(private val pullRequestRepository: PullRequestRepository) : 
 
     public fun fetchPullRequests() {
         viewModelScope.launch {
-            pullRequests = pullRequestRepository.getPullRequests().asLiveData()
+            pullRequests = pullRequestRepository.getPullRequests()
+                .catch { exception -> exception.message?.let { Log.e("Error", it) } }
+                .asLiveData()
         }
     }
 

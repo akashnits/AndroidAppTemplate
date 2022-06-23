@@ -1,18 +1,17 @@
 package com.akash.template.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.akash.template.R
 import androidx.fragment.app.viewModels
 import com.akash.template.api.NetworkService
+import com.akash.template.databinding.FragmentMainBinding
 import com.akash.template.repository.PullRequestRepository
 import com.akash.template.viewmodel.PullRequestVM
 import com.akash.template.viewmodel.PullRequestViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
 
@@ -28,14 +27,31 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        val binding = FragmentMainBinding.inflate(inflater, container, false)
+        context ?: return binding.root
+
+        // show the spinner when [MainViewModel.spinner] is true
+        pullRequestVM.spinner.observe(viewLifecycleOwner) { show ->
+            binding.spinner.visibility = if (show) View.VISIBLE else View.GONE
+        }
+
+        // Show a snackbar whenever the [ViewModel.snackbar] is updated a non-null value
+        pullRequestVM.snackbar.observe(viewLifecycleOwner) { text ->
+            text?.let {
+                Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        val adapter = PullRequestAdapter()
+        binding.pullRequestList.adapter = adapter
+        subscribeUi(adapter)
+
+        return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        pullRequestVM.pullRequests
-            .observe(this) { pullRequests ->
-                Toast.makeText(context,"pullrequest size is ${pullRequests?.size}", Toast.LENGTH_LONG).show()
-            }
+    private fun subscribeUi(adapter: PullRequestAdapter) {
+        pullRequestVM.pullRequests.observe(viewLifecycleOwner) { pullRequestList ->
+            adapter.submitList(pullRequestList)
+        }
     }
 }
